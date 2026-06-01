@@ -9,7 +9,7 @@
   ...
 }: {
   imports = [
-    /etc/nixos/hardware-configuration.nix
+    ./hardware-configuration.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -51,12 +51,6 @@
     extraGroups = ["wheel"];
     packages = with pkgs; [
       tree
-      git
-      foot
-      neovim
-      rofi
-      thunar
-      swaybg
     ];
   };
 
