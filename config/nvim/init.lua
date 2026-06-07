@@ -689,9 +689,10 @@ do
   --  See `:help lsp-config` for information about keys and how to configure
   ---@type table<string, vim.lsp.Config>
   local servers = {
+    nixd = {},
+    nil_ls = {},
     clangd = {},
     gopls = {},
-    pyright = {},
     rust_analyzer = {},
     --
     -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -739,13 +740,9 @@ do
 
   vim.pack.add {
     gh 'neovim/nvim-lspconfig',
-    gh 'mason-org/mason.nvim',
-    gh 'mason-org/mason-lspconfig.nvim',
-    gh 'WhoIsSethDaniel/mason-tool-installer.nvim',
   }
 
   -- Automatically install LSPs and related tools to stdpath for Neovim
-  require('mason').setup {}
 
   -- Ensure the servers and tools above are installed
   --
@@ -758,8 +755,6 @@ do
   vim.list_extend(ensure_installed, {
     -- You can add other tools here that you want Mason to install
   })
-
-  require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
   for name, server in pairs(servers) do
     vim.lsp.config(name, server)

@@ -32,7 +32,18 @@ in
     neovim
     ripgrep
     nil
+    nixd
+    clang-tools
+    go
+    rustc
+    fd
+    gnumake
+    tree-sitter
+    xclip
+    lua-language-server
     nixpkgs-fmt
+    pyright
+    rust-analyzer
     nodejs
     gcc
     git
@@ -43,11 +54,10 @@ in
     vesktop
     hyprshot
     fastfetch
+    cargo
+    stylua
+    black
+    isort
+    prettierd
   ];
-
-  programs.neovim = {
-    plugins = [
-      pkgs.vimPlugins.nvim-treesitter.withAllGrammars
-    ];
-  };
 }
