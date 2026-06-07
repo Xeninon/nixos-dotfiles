@@ -54,8 +54,6 @@
     ];
   };
 
-  programs.firefox.enable = true;
-
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -63,9 +61,12 @@
     portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
   };
 
+  fonts.packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+
   environment.systemPackages = with pkgs; [
     vim
     wget
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];

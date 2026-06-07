@@ -16,7 +16,11 @@ in
     enable = true;
     shellAliases = {
       reze = "echo I love Reze!!!";
+      rebuild = "sudo nixos-rebuild switch --flake ~/nixos-dotfiles#teal";
     };
+    initExtra = ''
+      PS1='\[\e[38;5;57m\]\u@\[\e[38;5;79m\]\h\[\e[38;5;63m\]:\[\e[38;5;57m\]\w\\$\[\e[0m\] '
+    '';
   };
   
   xdg.configFile = builtins.mapAttrs (name: subpath: {
@@ -35,6 +39,15 @@ in
     foot
     rofi
     thunar
-    swaybg
+    gh
+    vesktop
+    hyprshot
+    fastfetch
   ];
+
+  programs.neovim = {
+    plugins = [
+      pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+    ];
+  };
 }

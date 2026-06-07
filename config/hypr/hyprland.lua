@@ -19,7 +19,7 @@ hl.monitor({
     output   = "",
     mode     = "1920x1080@60",
     position = "auto",
-    scale    = "1.33",
+    scale    = "1",
 })
 
 
@@ -85,10 +85,10 @@ hl.env("HYPRCURSOR_SIZE", "24")
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
     general = {
-        gaps_in  = 5,
-        gaps_out = 20,
+        gaps_in  = 4,
+        gaps_out = 10,
 
-        border_size = 2,
+        border_size = 1,
 
         col = {
             active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
@@ -105,7 +105,7 @@ hl.config({
     },
 
     decoration = {
-        rounding       = 10,
+        rounding       = 15,
         rounding_power = 2,
 
         -- Change transparency of focused and unfocused windows
@@ -224,14 +224,14 @@ hl.config({
         kb_rules   = "",
 
         repeat_rate = 35;
-        repeat_delay = 200;
+        repeat_delay = 300;
 
         follow_mouse = 1,
 
         sensitivity = 0, -- -1.0 - 1.0, 0 means no modification.
 
         touchpad = {
-            natural_scroll = false,
+            natural_scroll = true,
         },
     },
 })
@@ -306,6 +306,7 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
+hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m active -m output"), { locked = true })
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
