@@ -1,8 +1,10 @@
-{ config, pkgs, ...}: 
+{ config, pkgs, ... }:
 let
   dotfiles = "${config.home.homeDirectory}/nixos-dotfiles/config";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
   configs = {
+    niri = "niri";
+    noctalia = "noctalia";
     hypr = "hypr";
     foot = "foot";
     nvim = "nvim";
@@ -20,7 +22,8 @@ in
       trash = "sudo nix-collect-garbage -d";
     };
     initExtra = ''
-      PS1='\[\e[38;5;57m\]\u@\[\e[38;5;79m\]\h\[\e[38;5;63m\]:\[\e[38;5;57m\]\w\\$\[\e[0m\] '
+      PATH="$HOME/go/bin:$PATH"
+      PS1='\[\e[38;5;98m\]\u@\[\e[38;5;79m\]\h\[\e[38;5;98m\]:\w\[\e[0m\] \[\e[38;5;79m\]\[\e[0m\] '
     '';
   };
 
@@ -28,7 +31,7 @@ in
     enable = true;
     pictures = "$HOME/images";
   };
-  
+
   xdg.configFile = builtins.mapAttrs (name: subpath: {
     source = create_symlink "${dotfiles}/${subpath}";
     recursive = true;
@@ -41,6 +44,7 @@ in
     nixd
     clang-tools
     go
+    gopls
     rustc
     fd
     gnumake
@@ -54,6 +58,7 @@ in
     gcc
     git
     foot
+    swaybg
     rofi
     thunar
     gh
