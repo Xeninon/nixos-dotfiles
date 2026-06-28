@@ -56,6 +56,7 @@
     isNormalUser = true;
     extraGroups = [ "wheel" ];
     packages = with pkgs; [
+      protonup-ng
       tree
     ];
   };
@@ -70,14 +71,43 @@
 
   # niri
   programs.niri.enable = true;
+  programs.xwayland.enable = true;
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
+
+  #steam
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "steam"
+      "steam-unwrapped"
+    ];
+  programs.steam.enable = true;
+  programs.gamemode.enable = true;
+  environment.sessionVariables = {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+  };
 
   fonts.packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
   environment.systemPackages = with pkgs; [
+    xwayland
+    xwayland-satellite
+    xorg-server
     vim
     wget
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+    (steam.overrideAttrs (old: {
+      postInstall = (old.postInstall or "") + ''
+        wrapProgram $out/bin/steam \
+          --add-flags "-cef-disable-gpu"
+      '';
+    }))
   ];
 
   nix.settings.experimental-features = [

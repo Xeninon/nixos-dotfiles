@@ -14,6 +14,10 @@ in
   home.username = "rez";
   home.homeDirectory = "/home/rez";
   home.stateVersion = "26.05";
+  home.sessionVariables = {
+    PATH = "$HOME/go/bin:$PATH";
+    PS1 = "\[\e[38;5;98m\]\u@\[\e[38;5;79m\]\h\[\e[38;5;98m\]:\w\[\e[0m\] \[\e[38;5;79m\]\[\e[0m\] ";
+  };
   programs.bash = {
     enable = true;
     shellAliases = {
@@ -21,10 +25,6 @@ in
       rebuild = "sudo nixos-rebuild switch --flake ~/nixos-dotfiles#teal";
       trash = "sudo nix-collect-garbage -d";
     };
-    initExtra = ''
-      PATH="$HOME/go/bin:$PATH"
-      PS1='\[\e[38;5;98m\]\u@\[\e[38;5;79m\]\h\[\e[38;5;98m\]:\w\[\e[0m\] \[\e[38;5;79m\]\[\e[0m\] '
-    '';
   };
 
   xdg.userDirs = {
@@ -58,8 +58,6 @@ in
     gcc
     git
     foot
-    swaybg
-    rofi
     thunar
     gh
     vesktop
@@ -71,6 +69,7 @@ in
     isort
     prettierd
     intel-gpu-tools
+    btop
     htop
   ];
 }
